@@ -19,12 +19,11 @@ The parser evaluates tokens sequentially.
 Position dictates meaning for the first 3-4 arguments.
 
 Syntax:
-`[sudo] <namespace> <verb> <object> [tool] [flags] [options]`
-
+`[sudo] <namespace> <verb> [object] [tool] [flags] [options]`
 1. Check for optional `sudo` token.
 2. Require `namespace` token.
 3. Require `verb` token.
-4. Require `object` token.
+4. If present, parse the next non-flag token as `object`.
 5. Check for optional `tool` token before flags start.
 6. Parse remaining tokens as `flags` (`--flag`) or `options` (`--key value`).
 
@@ -40,12 +39,11 @@ Condition: Token stream ends after namespace.
 
 Action: Return `Error: Missing verb for namespace <namespace>`.
 
-### Missing Object
+### Missing Object (when required)
 
-Condition: Token stream ends after verb.
+Condition: Token stream ends after verb for a verb/tool that requires an object.
 
-Action: Return `Error: Missing object for action <namespace> <verb>`.
-
+Action: Return `Error: Missing object for action <namespace> <verb>`. 
 ### Unknown Tokens
 
 Condition: Non-flag/option tokens found after the object/tool sequence.

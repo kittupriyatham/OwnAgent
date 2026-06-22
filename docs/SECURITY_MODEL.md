@@ -10,7 +10,7 @@ Focus: Privilege elevation and access control.
 
 ## Sudo Modifier
 
-Syntax: `sudo <namespace> <verb> <object>`
+Syntax: `sudo <namespace> <verb> [object] [tool] [flags] [options]`
 
 The `sudo` flag elevates privileges for a single command.
 
@@ -26,6 +26,7 @@ The Tool Registry routes the command to the Tool.
 
 The Tool is responsible for invoking the underlying Linux command using system `sudo` or equivalent polkit/pkexec mechanisms.
 
+Tools must execute commands using argv-based process APIs (e.g., fork/exec or an equivalent subprocess wrapper) and must not construct a shell command string (avoid `system()` / `/bin/sh -c`). When `sudo: true`, elevate by prefixing the argv with `sudo`/`pkexec` rather than re-parsing a concatenated string.
 Example:
 `sudo app install nano` -> Tool executes `sudo apt install nano`.
 

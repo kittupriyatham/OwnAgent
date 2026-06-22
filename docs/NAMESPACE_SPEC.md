@@ -12,10 +12,11 @@ They group related actions logically.
 
 ## Naming Convention
 
-Always use singular forms.
+Always use singular forms (per `docs/PROJECT_CONTEXT_v0.2.md`).
 
-Never use plural forms.
+Avoid plural forms (e.g., prefer `app` over `apps`).
 
+Note: `docs/ASL_v1.md` contains legacy plural examples; this spec supersedes that naming convention going forward.
 Correct: `app`
 
 Incorrect: `apps`

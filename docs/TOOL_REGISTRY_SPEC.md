@@ -39,10 +39,10 @@ A tool can register as the default handler.
 
 1. Receive Command Object from Parser.
 2. Extract `namespace`, `verb`, and `tool`.
-3. Lookup exact match in registry `(namespace, verb, tool)`.
+3. Look up exact match in registry `(namespace, verb, tool)`.
 4. If no exact match and no `tool` specified, fallback to default handler for `(namespace, verb)`.
-5. If no handler found, return error: `Error: No tool registered for <namespace> <verb>`.
-6. Invoke handler with Command Object (including `object`, `flags`, `options`).
+5. If no handler found, return error: `Error: No tool registered for <namespace> <verb> <tool>` (omit `<tool>` if none was provided).
+6. Invoke handler with Command Object (including `sudo`, `object`, `flags`, `options`).
 
 ---
 
