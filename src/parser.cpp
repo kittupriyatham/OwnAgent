@@ -1,10 +1,14 @@
 #include "parser.hpp"
 #include "tokenizer.hpp"
-
+#include <cctype>
 namespace asl {
 
 CommandModel Parser::parse(const std::string& input) {
-    return parse(Tokenizer::tokenize(input));
+    try {
+        return parse(Tokenizer::tokenize(input));
+    } catch (const std::exception& e) {
+        throw ParserError(e.what());
+    }
 }
 
 CommandModel Parser::parse(const std::vector<std::string>& tokens) {
@@ -100,7 +104,9 @@ CommandModel Parser::parse(const std::vector<std::string>& tokens) {
         std::string token = tokens[idx++];
         if (token.substr(0, 2) == "--") {
             std::string key = token.substr(2);
-            // Check if it's an option (has a value) or flag
+            if (key.empty()) {
+                throw ParserError("Unexpected token: " + token);
+            }
             if (idx < tokens.size() && tokens[idx].substr(0, 2) != "--") {
                 // It's an option
                 // We'll store it as a JSON value. If it's numeric, we can parse it, but for simplicity we store it as string,
@@ -108,7 +114,7 @@ CommandModel Parser::parse(const std::vector<std::string>& tokens) {
                 std::string val = tokens[idx++];
                 bool is_number = true;
                 for (char c : val) {
-                    if (!std::isdigit(c)) {
+                    if (!std::isdigit(static_cast<unsigned char>(c))) {
                         is_number = false;
                         break;
                     }
@@ -119,7 +125,10 @@ CommandModel Parser::parse(const std::vector<std::string>& tokens) {
                     cmd.options[key] = val;
                 }
             } else {
-                // It's a flag
+                // It's a flag, unless this key is a known option that requires a value.
+                if (key == "timeout" || key == "port" || key == "branch") {
+                    throw ParserError("Missing value for option " + key);
+                }
                 cmd.flags.push_back(key);
             }
         } else {
