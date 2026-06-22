@@ -43,7 +43,7 @@ Action: Return `Error: Missing verb for namespace <namespace>`.
 
 Condition: Token stream ends after verb for a verb/tool that requires an object.
 
-Action: Return `Error: Missing object for action <namespace> <verb>`. 
+Action: Return `Error: Missing object for action <namespace> <verb>`.
 ### Unknown Tokens
 
 Condition: Non-flag/option tokens found after the object/tool sequence.
