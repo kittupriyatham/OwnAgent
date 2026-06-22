@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ASL Command",
+  "type": "object",
+  "properties": {
+    "sudo": {"type": "boolean"},
+    "namespace": {"type": "string"},
+    "verb": {"type": "string"},
+    "object": {"type": "string"},
+    "tool": {"type": "string"},
+    "flags": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "options": {
+      "type": "object"
+    }
+  },
+  "required": ["namespace", "verb"]
+}
