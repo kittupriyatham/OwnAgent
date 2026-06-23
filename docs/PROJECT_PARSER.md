@@ -1,7 +1,5 @@
 # PROJECT_PARSER
 
-> Terminology note: `command` == `namespace`, `action` == `verb`, and `target` is the list-form of `object` (to support multiple targets).
-
 ## Canonical Command Model
 
 ```json

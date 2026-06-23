@@ -2,56 +2,71 @@
 
 ## Overview
 
-The Tool Registry routes Command Objects to execution logic.
+The Tool Registry manages what commands, actions, and tools exist in the system.
 
 Target Language: C++
 
-Input: Command Schema Struct.
+Input: Registry queries.
 
-Output: Tool Execution Result.
+Output: Schemas and availability boolean checks.
+
+---
+
+## Terminology Updates
+
+We use the canonical model terminology.
+
+Do NOT use: namespace, verb, object.
+
+USE: `command`, `action`, `target`.
 
 ---
 
 ## Architecture
 
-Implements the Registry Pattern.
+Implements a static registry for Milestone 2.
 
-Tools self-register during application startup.
+Registries are hardcoded in C++ source files (not loaded from JSON yet).
 
-Central registry maps `(namespace, verb, [tool])` to a C++ callback or Tool instance.
-
----
-
-## Registration
-
-Tools define what they handle.
-
-Example C++ concept:
-`Registry::register("app", "install", "nano", NanoInstallerTool);`
-`Registry::register("browser", "open", "chrome", ChromeBrowserTool);`
-
-A tool can register as the default handler.
-`Registry::registerDefault("browser", "open", DefaultBrowserTool);`
+The Registry provides a defined Schema for every `command.action` pair.
 
 ---
 
-## Routing Mechanism
+## Registration & Schemas
 
-1. Receive Command Object from Parser.
-2. Extract `namespace`, `verb`, and `tool`.
-3. Look up exact match in registry `(namespace, verb, tool)`.
-4. If no exact match and no `tool` specified, fallback to default handler for `(namespace, verb)`.
-5. If no handler found, return error: `Error: No tool registered for <namespace> <verb> <tool>` (omit `<tool>` if none was provided).
-6. Invoke handler with Command Object (including `sudo`, `object`, `flags`, `options`).
+The registry declares a schema for each supported action.
+
+Example conceptual schema for `browser.open`:
+- `min_targets`: 0
+- `max_targets`: -1 (unlimited)
+- `allowed_tools`: ["chrome", "firefox", "edge", "brave"]
+- `allowed_flags`: ["headless", "private"]
+- `allowed_options`: ["timeout", "profile"]
+
+Example conceptual schema for `app.install`:
+- `min_targets`: 1
+- `max_targets`: -1 (unlimited)
+- `allowed_tools`: []
+- `allowed_flags`: ["force"]
+- `allowed_options`: []
 
 ---
 
-## Execution Interface
+## Registry Responsibilities
 
-All tools implement a common interface.
+The Registry is used by the Validator to ask:
+"What exists?"
 
-Must accept the parsed Command Object.
+It answers questions like:
+- Does command `app` exist?
+- Does action `open` exist for `app`?
+- What are the allowed tools for `browser` `open`?
+- What is the target boundary for `file` `open`?
 
-Must return a standard Result object (Success/Failure, Output String).
+---
 
-Tools are responsible for formatting the final Linux command.
+## Execution Interface (Future)
+
+Currently, the Tool Registry only manages schema and validation paths.
+
+Execution routing will be implemented in future phases.

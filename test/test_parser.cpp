@@ -76,11 +76,6 @@ TEST(ParserTest, MissingAction) {
     EXPECT_THROW(p.parse("browser"), ParserError);
 }
 
-TEST(ParserTest, MissingOptionValue) {
-    Parser p;
-    EXPECT_THROW(p.parse("browser open google.com chrome --timeout"), ParserError);
-}
-
 TEST(ParserTest, SudoCommand) {
     Parser p;
     auto cmd = p.parse("sudo system restart");

@@ -10,7 +10,7 @@ Focus: Privilege elevation and access control.
 
 ## Sudo Modifier
 
-Syntax: `sudo <namespace> <verb> [object] [tool] [flags] [options]`
+Syntax: `sudo <command> <action> [target] [tool] [flags] [options]`
 
 The `sudo` flag elevates privileges for a single command.
 
@@ -20,7 +20,7 @@ It is evaluated first by the parser.
 
 ## Privilege Elevation Mechanism
 
-The parser sets `sudo: true` in the Command Object.
+The parser sets `sudo: true` in the Command Target.
 
 The Tool Registry routes the command to the Tool.
 
@@ -43,7 +43,7 @@ Tools should operate in isolated environments where applicable (e.g., containeri
 
 ### Permission Isolation
 
-Namespaces should define strict boundaries.
+Commands should define strict boundaries.
 Example: A `browser` tool cannot execute `system` level commands.
 
 ### Validation

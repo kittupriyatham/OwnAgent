@@ -22,7 +22,7 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
 
-add_library(asl_parser src/tokenizer.cpp src/parser.cpp src/command_model.cpp)
+add_library(asl_parser src/tokenizer.cpp src/parser.cpp src/command_model.cpp src/registry.cpp src/validator.cpp)
 target_include_directories(asl_parser PUBLIC include)
 target_link_libraries(asl_parser PUBLIC nlohmann_json::nlohmann_json)
 
@@ -30,7 +30,7 @@ add_executable(ownagent src/main.cpp)
 target_link_libraries(ownagent PRIVATE asl_parser)
 
 enable_testing()
-add_executable(asl_tests test/test_parser.cpp)
+add_executable(asl_tests test/test_parser.cpp test/test_registry.cpp test/test_validator.cpp)
 target_link_libraries(asl_tests PRIVATE asl_parser GTest::gtest_main)
 
 include(GoogleTest)

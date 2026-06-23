@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Parser converts a token stream into a Command Object.
+The Parser converts a token stream into a Command Target.
 
 Target Language: C++
 
@@ -19,11 +19,11 @@ The parser evaluates tokens sequentially.
 Position dictates meaning for the first 3-4 arguments.
 
 Syntax:
-`[sudo] <namespace> <verb> [object] [tool] [flags] [options]`
+`[sudo] <command> <action> [target] [tool] [flags] [options]`
 1. Check for optional `sudo` token.
-2. Require `namespace` token.
-3. Require `verb` token.
-4. If present, parse the next non-flag token as `object`.
+2. Require `command` token.
+3. Require `action` token.
+4. If present, parse the next non-flag token as `target`.
 5. Check for optional `tool` token before flags start.
 6. Parse remaining tokens as `flags` (`--flag`) or `options` (`--key value`).
 
@@ -33,21 +33,20 @@ Syntax:
 
 The parser must fail gracefully and return explicit errors.
 
-### Missing Verb
+### Missing Action
 
-Condition: Token stream ends after namespace.
+Condition: Token stream ends after command.
 
-Action: Return `Error: Missing verb for namespace <namespace>`.
+Action: Return `Error: Missing action for command <command>`.
 
-### Missing Object (when required)
+### Missing Target (when required)
 
-Condition: Token stream ends after verb for a verb/tool that requires an object.
+Condition: Token stream ends after action for a action/tool that requires an target.
 
-Action: Return `Error: Missing object for action <namespace> <verb>`.
-
+Action: Return `Error: Missing target for action <command> <action>`.
 ### Unknown Tokens
 
-Condition: Non-flag/option tokens found after the object/tool sequence.
+Condition: Non-flag/option tokens found after the target/tool sequence.
 
 Action: Return `Error: Unexpected token <token>`.
 
@@ -74,9 +73,9 @@ Output:
 ```json
 {
   "sudo": false,
-  "namespace": "browser",
-  "verb": "open",
-  "object": "google.com",
+  "command": "browser",
+  "action": "open",
+  "target": ["google.com"],
   "tool": "chrome",
   "flags": ["headless"],
   "options": {}
