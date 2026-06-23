@@ -2,9 +2,9 @@
 
 ## Overview
 
-Namespaces define command domains in ASL.
+Commands define command domains in ASL.
 
-Namespaces are NOT OS object types.
+Commands are NOT OS object types.
 
 They group related actions logically.
 
@@ -23,7 +23,7 @@ Incorrect: `apps`
 
 ---
 
-## Supported Namespaces
+## Supported Commands
 
 - `app`: Application and package management.
 - `file`: File system operations.
@@ -41,7 +41,7 @@ Incorrect: `apps`
 
 ## Philosophy
 
-Namespaces trigger specific tool sets.
+Commands trigger specific tool sets.
 
 Example:
 
