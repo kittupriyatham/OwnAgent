@@ -1,5 +1,4 @@
 #include <gtest/gtest.h>
-#include <memory>
 #include "parser.hpp"
 #include "registry.hpp"
 #include "validator.hpp"

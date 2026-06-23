@@ -75,7 +75,7 @@ Output:
   "sudo": false,
   "command": "browser",
   "action": "open",
-  "target": ["google.com"],
+  "target": "google.com",
   "tool": "chrome",
   "flags": ["headless"],
   "options": {}

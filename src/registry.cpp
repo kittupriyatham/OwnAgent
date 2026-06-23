@@ -4,7 +4,6 @@ namespace asl {
 
 Registry::Registry() {
     // Hardcoded schema for `app` command
-    // app.open
     schemas_["app"]["open"] = {
         .min_targets = 1,
         .max_targets = -1,
@@ -13,7 +12,6 @@ Registry::Registry() {
         .allowed_options = {}
     };
 
-    // app.close
     schemas_["app"]["close"] = {
         .min_targets = 1,
         .max_targets = -1,
@@ -22,7 +20,6 @@ Registry::Registry() {
         .allowed_options = {}
     };
 
-    // app.install
     schemas_["app"]["install"] = {
         .min_targets = 1,
         .max_targets = -1,
@@ -31,7 +28,6 @@ Registry::Registry() {
         .allowed_options = {}
     };
 
-    // app.uninstall
     schemas_["app"]["uninstall"] = {
         .min_targets = 1,
         .max_targets = -1,
@@ -41,7 +37,6 @@ Registry::Registry() {
     };
 
     // Hardcoded schema for `browser` command
-    // browser.open
     schemas_["browser"]["open"] = {
         .min_targets = 0,
         .max_targets = -1,
@@ -50,7 +45,6 @@ Registry::Registry() {
         .allowed_options = {"timeout", "profile"}
     };
 
-    // browser.close
     schemas_["browser"]["close"] = {
         .min_targets = 0,
         .max_targets = -1,
@@ -59,7 +53,6 @@ Registry::Registry() {
         .allowed_options = {}
     };
 
-    // browser.reload
     schemas_["browser"]["reload"] = {
         .min_targets = 0,
         .max_targets = 0,
@@ -68,7 +61,6 @@ Registry::Registry() {
         .allowed_options = {}
     };
 
-    // browser.back
     schemas_["browser"]["back"] = {
         .min_targets = 0,
         .max_targets = 0,
@@ -77,11 +69,68 @@ Registry::Registry() {
         .allowed_options = {}
     };
 
-    // browser.forward
     schemas_["browser"]["forward"] = {
         .min_targets = 0,
         .max_targets = 0,
         .allowed_tools = {"chrome", "firefox", "edge", "brave"},
+        .allowed_flags = {},
+        .allowed_options = {}
+    };
+
+    // Placeholder schemas for `file` command
+    schemas_["file"]["open"] = {
+        .min_targets = 1,
+        .max_targets = -1,
+        .allowed_tools = {"nano", "vim", "code"},
+        .allowed_flags = {},
+        .allowed_options = {}
+    };
+
+    schemas_["file"]["copy"] = {
+        .min_targets = 2,
+        .max_targets = 2,
+        .allowed_tools = {},
+        .allowed_flags = {"recursive", "force"},
+        .allowed_options = {}
+    };
+
+    schemas_["file"]["move"] = {
+        .min_targets = 2,
+        .max_targets = 2,
+        .allowed_tools = {},
+        .allowed_flags = {"force"},
+        .allowed_options = {}
+    };
+
+    schemas_["file"]["delete"] = {
+        .min_targets = 1,
+        .max_targets = -1,
+        .allowed_tools = {},
+        .allowed_flags = {"recursive", "force"},
+        .allowed_options = {}
+    };
+
+    // Placeholder schemas for `system` command
+    schemas_["system"]["shutdown"] = {
+        .min_targets = 0,
+        .max_targets = 0,
+        .allowed_tools = {},
+        .allowed_flags = {"force"},
+        .allowed_options = {"delay"}
+    };
+
+    schemas_["system"]["reboot"] = {
+        .min_targets = 0,
+        .max_targets = 0,
+        .allowed_tools = {},
+        .allowed_flags = {"force"},
+        .allowed_options = {"delay"}
+    };
+
+    schemas_["system"]["sleep"] = {
+        .min_targets = 0,
+        .max_targets = 0,
+        .allowed_tools = {},
         .allowed_flags = {},
         .allowed_options = {}
     };
