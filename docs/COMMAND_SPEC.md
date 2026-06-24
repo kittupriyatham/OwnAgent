@@ -1,4 +1,4 @@
-# NAMESPACE_SPEC
+# COMMAND_SPEC
 
 ## Overview
 

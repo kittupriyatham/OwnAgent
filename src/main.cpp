@@ -1,9 +1,13 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <memory>
 #include "parser.hpp"
-#include "registry.hpp"
-#include "validator.hpp"
+#include "executor.hpp"
+#include "tools/app_tool.hpp"
+#include "tools/browser_tool.hpp"
+#include "tools/file_tool.hpp"
+#include "tools/system_tool.hpp"
 
 using namespace asl;
 
@@ -22,17 +26,19 @@ int main(int argc, char** argv) {
         Parser p;
         CommandModel cmd = p.parse(tokens);
 
-        Registry registry;
-        Validator validator(registry);
+        Executor executor;
+        executor.registerTool("app", std::make_unique<AppTool>());
+        executor.registerTool("browser", std::make_unique<BrowserTool>());
+        executor.registerTool("file", std::make_unique<FileTool>());
+        executor.registerTool("system", std::make_unique<SystemTool>());
 
-        ValidationResult validation_res = validator.validate(cmd);
+        CommandResult result = executor.execute(cmd);
 
-        if (!validation_res.success) {
-            std::cout << validation_res.to_json().dump(2) << std::endl;
+        std::cout << result.to_json().dump(2) << std::endl;
+
+        if (!result.success) {
             return 1;
         }
-
-        std::cout << cmd.to_json().dump(2) << std::endl;
 
     } catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << std::endl;
