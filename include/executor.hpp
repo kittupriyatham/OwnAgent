@@ -14,7 +14,6 @@ class Executor {
 public:
     Executor();
 
-    // Registers a tool mapping. The Executor takes ownership of the Tool instance.
     void registerTool(const std::string& commandName, std::unique_ptr<Tool> tool);
 
     CommandResult execute(const CommandModel& cmd);

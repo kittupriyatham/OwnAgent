@@ -37,8 +37,10 @@ TEST_F(ExecutorTest, ValidationFailureBlocksExecution) {
 }
 
 TEST_F(ExecutorTest, MissingToolHandler) {
-    // We haven't registered FileTool
-    auto cmd = parser.parse("file open test.txt");
+    // To trigger 'MissingToolHandler' cleanly, we must bypass validation or supply a valid command
+    // that just isn't registered in the Executor.
+    // "file open test.txt nano" is valid in registry, but FileTool isn't registered in this test setup.
+    auto cmd = parser.parse("file open test.txt nano");
     auto res = executor.execute(cmd);
 
     EXPECT_FALSE(res.success);
